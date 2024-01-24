@@ -7795,7 +7795,11 @@
         return false;
       }
       for (let i = 0; i < keysA.length; i++) {
-        if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+        if (
+          // @ts-expect-error - TS2345 - Argument of type 'string | undefined' is not assignable to parameter of type 'PropertyKey'.
+          !hasOwnProperty.call(objB, keysA[i]) || // @ts-expect-error - TS2538 - Type 'undefined' cannot be used as an index type. | TS2538 - Type 'undefined' cannot be used as an index type.
+          !is(objA[keysA[i]], objB[keysA[i]])
+        ) {
           return false;
         }
       }
@@ -8321,9 +8325,13 @@
       const value = rgbValidRegex.test(inlineValue) ? inlineValue : computedStyle[prop];
       const matches = getFirstMatch(rgbMatchRegex, value).split(COMMA_DELIMITER2);
       return {
+        // @ts-expect-error - TS2345 - Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
         rValue: (0, import_defaultTo.default)(parseInt(matches[0], 10), 255),
+        // @ts-expect-error - TS2345 - Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
         gValue: (0, import_defaultTo.default)(parseInt(matches[1], 10), 255),
+        // @ts-expect-error - TS2345 - Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
         bValue: (0, import_defaultTo.default)(parseInt(matches[2], 10), 255),
+        // @ts-expect-error - TS2345 - Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
         aValue: (0, import_defaultTo.default)(parseFloat(matches[3]), 1)
       };
     }
